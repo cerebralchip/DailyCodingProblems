@@ -18,9 +18,28 @@ def serialise(root):
     else:
         return "None"
 
-# def deserialize(s):
+def deserialiser(nodes):
+    # get the first node in the list
+    val = nodes.pop(0)
+    # if the value is None, return None
+    if val == "None":
+        return None
+    # otherwise, create a new node with the value
+    node = Node(val)
+    # call the function recursively to get the left and right nodes
+    node.left = deserialiser(nodes)
+    node.right = deserialiser(nodes)
+    return node
+
+def deserialise_root(s):
+    # split string into list
+    nodes = s.split()
+    #call recursive function to build tree
+    return deserialiser(nodes)
+
+
 
 # The following test should pass:
-# assert deserialize(serialize(node)).left.left.val == 'left.left'
+assert deserialise_root(serialise(node)).left.left.val == 'left.left'
 
-print(serialise(node))
+print(deserialise_root(serialise(node)))
